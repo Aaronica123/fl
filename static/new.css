@@ -1,0 +1,22 @@
+body{
+    color: blue;
+    background-color: pink;
+    
+}
+table{
+    border: 2px solid black;
+    width: 50%;
+    height: 100px;
+}
+
+table td{
+    border: 2px solid red;
+    text-align: center;
+    font-size: 20px;
+}
+
+table th{
+    border: 2px solid green;
+    text-align: center;
+    font-size: 25px;
+}
