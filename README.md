@@ -28,7 +28,7 @@ Behind the scenes, a secure **admin panel** lets authorized personnel manage loc
 Only administrators who know the secret access code can manage the platform.
 
 ### Admin Flow  
-## Database Schema (PostgreSQL)  
+## Database Schema (PostgreSQL)  👨‍🏫
 
 
 -- Users (app users)
@@ -53,7 +53,7 @@ CREATE TABLE Items (
     item VARCHAR(100) UNIQUE NOT NULL
 );
 
--- Recycling facility locations
+-- Recycling facility locations📚
 CREATE TABLE Locations (
     id SERIAL PRIMARY KEY,
     region VARCHAR(100) UNIQUE NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE Amount (
 );
 
 
-Deletion Rules (Admin Privileges)
+Deletion Rules (Admin Privileges)📃📓
 
 Locations and Items can only be deleted if not referenced in Amount.
 PostgreSQL ON DELETE RESTRICT enforces this automatically → admin receives clear error if trying to delete in-use records.
