@@ -95,10 +95,82 @@ def index():
 
 # ... all your other routes exactly the same ...
 
+
+@app.route('/locations_page')
+def locations_page():
+    # Protect route: Check if user is logged in
+    if 'user_id' not in session:
+        return redirect('/')
+    else:
+      return render_template('index.html')
+
+@app.route('/item_page')
+def item_page():
+    # Protect route: Check if user is logged in
+    if 'user_id' not in session:
+        return redirect('/')
+    else:
+        return render_template('item.html')
+
+@app.route('/statistics_page')
+def statistics_page():
+    # Protect route: Check if user is logged in
+    if 'user_id' not in session:
+        return redirect('/')
+    else:
+        return render_template('get_amount.html') 
+        
+# Create tables
+
+
+# --- ROUTES THAT WERE MISSING SESSION PROTECTION ---
+
+@app.route('/register')
+def users():
+    return render_template('users.html')
+
+@app.route('/back')
+def back():
+    return render_template('login1.html')
+
+@app.route('/delete_user')
+def delete_user():
+    # ADDED PROTECTION CHECK
+    if 'user_id' not in session:
+        return redirect('/')
+    return render_template('delete_user.html')
+
+@app.route('/delete_location')
+def delete_location():
+    # ADDED PROTECTION CHECK
+    if 'user_id' not in session:
+        return redirect('/')
+    return render_template('delete_location.html') 
+
+@app.route('/data_page')
+def item():
+    # ADDED PROTECTION CHECK
+    if 'user_id' not in session:
+        return redirect('/')
+    return render_template('items1.html')
+    # --------------------------------------------------
+        
+@app.route('/prev')
+def prev():
+    return render_template('admin_dashboard.html')
+
+        
+@app.route('/map_page')
+def map_page():
+    return render_template('map.html')
+@app.route('/prev_user')
+def prev_use():
+    return render_template('dashboard.html')
+
 @app.route('/admin')
 def admin():
     return render_template('code.html')
-
+        
 # *** REMOVE THIS BLOCK ENTIRELY ***
 # with app.app_context():
 #     db.create_all()
