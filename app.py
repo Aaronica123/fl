@@ -6,13 +6,18 @@ app = Flask(__name__)
 
 
 # ---- CONFIG ----
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
-    'DATABASE_URL',
-    'postgresql://postgres:Aaronica@localhost:5432/plp'
-)
-if app.config['SQLALCHEMY_DATABASE_URI'].startswith('postgres://'):
-    app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_URI'].replace('postgres://', 'postgresql://', 1)
+DATABASE_URL = os.getenv('DATABASE_URL')
 
+# If running on Render → use Render's DB
+if DATABASE_URL:
+    # Fix Render's postgres:// → postgresql://
+    if DATABASE_URL.startswith('postgres://'):
+        DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+else:
+    # If running locally → use local DB (only if server is ON)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Aaronica@localhost:5432/plp'
+    
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['SECRET_KEY'] = 'A_VERY_SECRET_KEY_USED_TO_SIGN_SESSIONS_12345'
