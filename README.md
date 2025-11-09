@@ -1,39 +1,31 @@
 # EcoTrack – Electronic Waste Recycling App  
-**Turn your old gadgets into planet-saving superpowers!**
+**Turning e-waste into impact, one scan at a time.**
 
-![EcoTrack Logo](https://via.placeholder.com/800x200/34C759/FFFFFF?text=EcoTrack+%E2%99%BB)  
-*Live Demo • App Store • Google Play*
+[![EcoTrack Logo](https://via.placeholder.com/800x200?text=EcoTrack+Logo)](https://ecotrack.app)  
+*Live demo (coming soon) • App Store • Google Play*
 
 ---
 
 ## Overview  
-EcoTrack is the **fun, fast, and transparent** way to recycle e-waste.  
-Scan → Drop → Track → Celebrate!  
+**EcoTrack** is a mobile-first platform that makes responsible e-waste recycling simple, transparent, and rewarding. Users scan old devices, discover certified recycling facilities, learn exactly what materials are recovered, and track their personal environmental impact.  
 
-No more guessing where your phone goes after you say goodbye.  
-With EcoTrack, you see **exactly** what materials are recovered and how much CO₂ you saved.
+Behind the scenes, a secure **admin panel** lets authorized personnel manage locations, recyclable items, and user data while maintaining strict referential integrity.
 
 ---
 
-## User Journey – 7 Simple Steps  
-
-| Step | Action | What Happens | Emoji |
-|------|--------|--------------|-------|
-| 1 | **Register** | Sign up with email or Google/Apple in 12 seconds | Registration Form → Mobile Phone |
-| 2 | **Login** | Face ID, fingerprint, or one-tap login | Key → Locked |
-| 3 | **Dashboard** | See your live impact: kg recycled, CO₂ saved, badges | Chart Increasing → Trophy |
-| 4 | **View Locations** | Map with 5,000+ certified recyclers + smart filters | Map → Pushpin |
-| 5 | **Submit Waste** | Scan barcode or take photo → AI tells you materials & process | Camera with Flash → Recycling Symbol |
-| 6 | **View Collected Waste** | Timeline + official recycling certificates (shareable!) | Clipboard → Framed Picture |
-| 7 | **Logout** | Secure exit (auto after 10 min) | Door → Locked |
-
-**Average time from scan to drop-off: 90 seconds**
+## User Features (7-Step Cycle)  
+1. **Register** – Email or one-tap Google/Apple sign-in  
+2. **Login** – Biometric or saved session  
+3. **Dashboard** – Real-time stats (kg recycled, CO₂ saved, badges)  
+4. **View Locations** – Map + filters (distance, certifications, hazardous-waste handling)  
+5. **Submit Waste** – AI-powered barcode/photo scan → instant material breakdown & drop-off guidance  
+6. **View Collected Waste** – Timeline with official recycling certificates  
+7. **Logout** – Secure exit (auto after 10 min inactivity)  
 
 ---
 
-## Admin Panel – Secure & Powerful Management  
-
-Only admins who know the secret code can access the control center.
+## Admin Panel – Secure Management Cycle  
+Only administrators who know the secret access code can manage the platform.
 
 ### Admin Flow  
 ## Database Schema (PostgreSQL)  
