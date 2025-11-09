@@ -26,7 +26,7 @@ def register_code_model(model):
 # --- Routes ---
 
 # 1. Route to serve the items1.html file (The Dashboard)
-@codes_bp.route('/prev_user')
+@codes_bp.route('/home')
 def items1_html_route():
     """
     Renders and serves the items1.html template.
@@ -35,7 +35,7 @@ def items1_html_route():
     """
     # Check for session protection (optional, but good practice)
     if 'user_id' not in session:
-        return redirect(url_for('dashboard_home')) # Redirect to code entry page
+        return redirect(url_for('index')) # Redirect to code entry page
         
     return render_template('admin_dashboard.html')
 

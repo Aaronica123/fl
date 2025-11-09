@@ -90,9 +90,22 @@ app.register_blueprint(codes_bp)
 @app.route('/')
 def index():
     if 'user_id' in session:
-        return render_template('dashboard.html')
-    return render_template('login1.html')
+            # If logged in, redirect to the main content page
+            return render_template('dashboard.html')
+    else:
+            # If not logged in, render the login page
+            return render_template('login1.html')
 
+# New protected route for the main dashboard access
+@app.route('/home')
+def dashboard_home():
+    # Protect route: Check if user is logged in
+    if 'user_id' not in session:
+        # If not logged in (session not set), redirect to the code entry page
+        return redirect('/')
+    else:
+        # If logged in, render the main dashboard template (items1.html)
+        return render_template('items1.html')
 # ... all your other routes exactly the same ...
 
 
@@ -159,10 +172,10 @@ def item():
 def prev():
     return render_template('admin_dashboard.html')
 
-        
 @app.route('/map_page')
 def map_page():
     return render_template('map.html')
+
 @app.route('/prev_user')
 def prev_use():
     return render_template('dashboard.html')
