@@ -8,15 +8,16 @@ app = Flask(__name__)
 # ---- CONFIG ----
 DATABASE_URL = os.getenv('DATABASE_URL')
 
-# If running on Render → use Render's DB
-if DATABASE_URL:
-    # Fix Render's postgres:// → postgresql://
-    if DATABASE_URL.startswith('postgres://'):
-        DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
-    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
-else:
-    # If running locally → use local DB (only if server is ON)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Aaronica@localhost:5432/plp'
+if not DATABASE_URL:
+    raise RuntimeError(
+        "DATABASE_URL is not set! "
+        "Go to Render dashboard → Web Service → Environment → "
+        "Add DATABASE_URL and connect your PostgreSQL instance."
+    )
+
+# Fix Render's URL format: postgres:// → postgresql://
+if DATABASE_URL.startswith('postgres://'):
+    DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
     
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
