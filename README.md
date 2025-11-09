@@ -69,14 +69,14 @@ CREATE TABLE Amount (
 );
 
 
-Deletion Rules (Admin Privileges)📃📓
+**Deletion Rules (Admin Privileges)📃📓**
 
 Locations and Items can only be deleted if not referenced in Amount.
 PostgreSQL ON DELETE RESTRICT enforces this automatically → admin receives clear error if trying to delete in-use records.
 Users can be deleted anytime via unique email (no foreign key constraints block this).
 
 
-Tech Stack
+**Tech Stack**
 
 Frontend: React Native (iOS & Android) + React (Web)
 Backend: Node.js + Express
@@ -87,7 +87,7 @@ Authentication: JWT + bcrypt
 Admin Panel: Protected route with hardcoded code check
 
 
-Why EcoTrack Stands Out
+**Why EcoTrack Stands Out**
 
 98.7% scan accuracy
 Full transparency: users see exact materials recovered and official certificates
@@ -96,24 +96,22 @@ Enterprise-ready B2B module (Q1 2025)
 Partnerships with TES, Sims Recycling, Umicore
 
 
-Current Traction
+**Current Traction**
 
 28,000 beta users
 214 tons of e-waste diverted
 4.8/5 App Store rating
 
 
-Roadmap
+**Roadmap**
 
 Q1 2025 – B2B enterprise dashboard
 Q2 2025 – Carbon credit marketplace integration
 Q3 2025 – 1 million active users
 
 
-Contact & Links
-
+**Contact & Links**
 Welcome to EcoTrack😉 https://fl-3-pskv.onrender.com
-
 
 Website: https://fl-3-pskv.onrender.com
 Email: k.aaronmutua@gmail.com
