@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Dashboard</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font */
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <script>
+        // Check authentication status on load
+        window.onload = function() {
+            if (sessionStorage.getItem('isAuthenticated') !== 'true') {
+                // If not authenticated, redirect to the login page (which is '/')
+                window.location.href = '/'; 
+            }
+            // Display welcome message in the console
+            const userDetails = JSON.parse(sessionStorage.getItem('userDetails') || '{}');
+            console.log(`Welcome, ${userDetails.firstName || 'User'}! Session is active.`);
+        }
+
+        /**
+         * Handles the client and server-side logout process.
+         */
+        async function handleLogout() {
+            // 1. Clear server-side session (Flask session)
+            try {
+                // Send a POST request to clear the server session
+                const response = await fetch('/logout', { method: 'POST' });
+                if (!response.ok) {
+                    console.error('Server logout failed, but proceeding with client clear.');
+                }
+            } catch (error) {
+                console.error('Network error during server logout:', error);
+            }
+
+            // 2. Clear client-side sessionStorage
+            sessionStorage.removeItem('isAuthenticated');
+            sessionStorage.removeItem('userEmail');
+            sessionStorage.removeItem('userDetails');
+
+            // 3. Redirect back to the main route (which renders login.html)
+            window.location.href = '/';
+        }
+    </script>
+
+    <!-- Header Navigation Bar -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold text-indigo-600">App Tracker</h1>
+                </div>
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex space-x-4">
+                    <!-- TAG 1: HOMEPAGE (current page) -->
+                    <a href="/" class="text-gray-900 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium bg-indigo-50">
+                        Homepage
+                    </a>
+                    <!-- TAG 2: MAPS -->
+                    <a href="/locations_page" class="text-gray-500 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
+                        Maps
+                    </a>
+                    <!-- TAG 3: INPUT -->
+                    <a href="/item_page" class="text-gray-500 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
+                        Input
+                    </a>
+                    <!-- TAG 4: STATISTIC -->
+                    <a href="/statistics_page" class="text-gray-500 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
+                        Statistic
+                    </a>
+                </nav>
+                <!-- TAG 5: LOGOUT Button -->
+                <div>
+                    <button 
+                        onclick="handleLogout()"
+                        class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition duration-150 shadow-md">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area (Homepage Content) -->
+    <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Welcome to the Homepage</h2>
+            <p class="text-gray-600">
+                This is your application dashboard. Use the navigation bar above to manage locations, input items, view statistics, or log out.
+            </p>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <!-- Using a standard font for a clean look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container for the form box */
+        .register-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        /* Title styling */
+        h1 {
+            text-align: center;
+            color: #00838f; /* Teal color for emphasis */
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        /* Label Styling: Ensures label text is visible above the input */
+        label {
+            display: block;
+            margin-bottom: 5px; /* Space between label and input field */
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        /* Input group styling: Ensures space below the entire label+input block */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        /* Input styling */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cfd8dc;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00bcd4;
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.2);
+        }
+
+        /* Primary Button: Register */
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: #00bcd4; /* Cyan blue for primary action */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: #0097a7;
+        }
+        
+        /* Secondary Button: Back to Login */
+        .back-form {
+            margin-top: 15px;
+        }
+
+        .back-form button {
+            width: 100%;
+            padding: 12px;
+            background: #78909c; /* Blue-grey for secondary action */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .back-form button:hover {
+            background: #546e7a;
+        }
+    </style>
+</head>
+<body>
+<div class="register-container">
+    <h1>Create Account</h1>
+    
+    <form action="/api/users" method="post">
+        
+        <div class="input-group">
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name" placeholder="John" id="first_name" required>
+        </div>
+
+        <div class="input-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name" placeholder="Doe" id="last_name" required>
+        </div>
+
+        <div class="input-group">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" placeholder="john.doe@example.com" id="email" required>
+        </div>
+
+        <div class="input-group">
+            <label for="pass">Password</label>
+            <input type="password" name="password" placeholder="••••••••" id="pass" required>
+        </div>
+        
+        <input type="submit" value="Register">
+    </form>
+    
+    <form action="/back" class="back-form">
+        <button type="submit">Back to Login</button>
+    </form>
+</div>
+
+</body>
+</html>

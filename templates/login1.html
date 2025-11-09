@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Using the consistent 'Inter' font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Match the registration page background gradient */
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container for the form box (Renamed from login-box to match register-container) */
+        .register-container {
+            background: white;
+            padding: 40px;
+            /* Match border radius and shadow */
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px; /* Consistent width with register page */
+        }
+
+        /* Title styling (Updated h2 to h1 and matched styles) */
+        h1 {
+            text-align: center;
+            color: #00838f; /* Teal color for emphasis */
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        /* Label Styling: Consistent label appearance */
+        label {
+            display: block;
+            margin-bottom: 5px; 
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        /* Input group styling for consistent spacing */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        /* Input styling: Consistent fields */
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cfd8dc;
+            /* Match border radius */
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00bcd4;
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.2);
+        }
+
+        /* Primary Button: Log In (Matched style of Register button on other page) */
+        .login-button { 
+            width: 100%;
+            padding: 12px;
+            background: #00bcd4; /* Primary Cyan blue */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .login-button:hover {
+            background: #0097a7;
+        }
+
+        /* Secondary Button: Register (Matched style of Back button on other page) */
+        .register-button-container {
+             margin-top: 15px;
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 12px;
+            background: #78909c; /* Secondary Blue-grey */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .register-button:hover {
+            background: #546e7a;
+        }
+        
+        /* Message styling (kept consistent for feedback) */
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        .success {
+            color: #27ae60;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <h1>Login</h1>
+    <form id="loginForm" action="/login" method="post">
+        
+        <div class="input-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <input type="submit" value="Log In" class="login-button">
+    </form>
+    
+    <div class="register-button-container">
+        <a href="/register">
+            <button type="button" class="register-button">Create New Account</button>
+        </a>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+<script>
+    const form = document.getElementById('loginForm');
+    const messageDiv = document.getElementById('message');
+    let isSubmitting = false; 
+
+    /**
+     * Displays a success or error message to the user.
+     * @param {string} text - The message text.
+     * @param {string} type - 'success' or 'error'.
+     */
+    function displayMessage(text, type) {
+        messageDiv.textContent = text;
+        messageDiv.className = type;
+    }
+
+    // --- LOGIN HANDLER ---
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); 
+        
+        if (isSubmitting) return;
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        displayMessage('', ''); 
+        isSubmitting = true;
+
+        try {
+            // 1. POST to /login for server-side authentication
+            displayMessage('Authenticating...', 'success');
+
+            const authResponse = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            // Check if authentication failed
+            if (!authResponse.ok) {
+                const errorData = await authResponse.json().catch(() => ({ error: 'Authentication failed.' }));
+                displayMessage(errorData.error || 'Authentication failed. Check credentials.', 'error');
+                return;
+            }
+
+            // Authentication Successful: Proceed to get user details
+            displayMessage('Authentication successful. Fetching detailed user data...', 'success');
+            
+            // 2. GET /get_user_credentials for user details
+            const detailsResponse = await fetch(`/get_user_credentials?email=${encodeURIComponent(email)}`);
+            const detailsData = await detailsResponse.json();
+
+            if (!detailsResponse.ok || detailsData.error) {
+                displayMessage(detailsData.error || 'User details GET failed after successful login.', 'error');
+                return;
+            }
+
+            // 3. Store the data in sessionStorage
+            const userDetails = detailsData.credentials; 
+            if (!userDetails) {
+                displayMessage('User credentials endpoint returned an invalid structure.', 'error');
+                return;
+            }
+
+            sessionStorage.setItem('isAuthenticated', 'true');
+            sessionStorage.setItem('userEmail', userDetails.email);
+            sessionStorage.setItem('userDetails', JSON.stringify(userDetails));
+
+            displayMessage(`Welcome back, ${userDetails.first_name || 'User'}! Redirecting...`, 'success');
+            
+            // 4. Redirect the user to the dashboard
+            setTimeout(() => {
+                 window.location.href = '/'; 
+            }, 500); 
+
+        } catch (error) {
+            console.error("Login process network error:", error);
+            displayMessage('A critical network error occurred during the login process.', 'error');
+        } finally {
+            isSubmitting = false;
+        }
+    });
+
+    // Initial check for existing session
+    window.onload = function() {
+        if (sessionStorage.getItem('isAuthenticated') === 'true') {
+            const detailsString = sessionStorage.getItem('userDetails');
+            if (detailsString) {
+                 try {
+                     const userDetails = JSON.parse(detailsString);
+                     const userName = userDetails.first_name || userDetails.email; 
+                     displayMessage(`Session found: Logged in as ${userName}.`, 'success');
+                 } catch (e) {
+                     displayMessage('Session data corrupted.', 'error');
+                 }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

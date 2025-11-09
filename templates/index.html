@@ -1,40 +1,62 @@
-{% extends "d.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Locations Map</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <style>
+        #map { height: 80vh; width: 100%; }
+        #actionBtn {
+            position: absolute;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
 
-{%block head%} 
+<button id="actionBtn">Refresh Markers</button>
 
-{% endblock %}
+<div id="map"></div>
 
-{% block body %}
-<h1>Welcome home sonny</h1>
-<div>
-    <p>This is the index page</p>
-    {%if tasks|length < 1 %}
-    <h3>No tasks added yet</h3>
-    {%endif%}
-    <table>
-        <tr>
-            <th>one</th>
-            <th>two</th>
-            <th>three</th>
-        </tr>
-        {% for task in tasks %}
-        <tr>
-            <td>{{task.name}}</td>
-            <td>{{task.date_created.time()}}</td>
-            
-            <td>
-            <a href="/delete/{{task.id}}">Delete</a>
-                <br>
-            <a href="/update/{{task.id}}">Update</a>
-        </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <form action="/" method="post">
-        <input type="text" name="one" placeholder="name" id="one" required>
-        <input type="submit" value="Add task">
-        <input type="button" value="Clear">
-    </form>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // Initialise map (centered on the world)
+    const map = L.map('map').setView([20, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-</div>
-{% endblock %}
+    const markerLayer = L.layerGroup().addTo(map);
+
+    async function loadMarkers() {
+        markerLayer.clearLayers();
+        const resp = await fetch('/api/locations');
+        const data = await resp.json();
+
+        data.forEach(loc => {
+            const marker = L.marker([loc.latitude, loc.longitude])
+                .addTo(markerLayer)
+                .bindPopup(`<b>${loc.region}</b><br>Lat: ${loc.latitude}<br>Lng: ${loc.longitude}`);
+        });
+
+        // Auto-zoom to fit all markers
+        if (data.length) {
+            const bounds = markerLayer.getBounds();
+            map.fitBounds(bounds.pad(0.2));
+        }
+    }
+
+    // Initial load
+    loadMarkers();
+
+    // Button refreshes the markers
+    document.getElementById('actionBtn').addEventListener('click', loadMarkers);
+</script>
+</body>
+</html>

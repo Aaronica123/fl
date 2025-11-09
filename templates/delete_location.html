@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Amount</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        input[type="submit"] {
+            background: #2ecc71;
+            color: white;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            padding: 14px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        input[type="submit"]:hover {
+            background: #27ae60;
+        }
+        .loading {
+            color: #95a5a6;
+            font-style: italic;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .success { color: #27ae60; }
+        .error { color: #e74c3c; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Submit Item Amount</h2>
+
+    <form action="/delete_item" method="post">
+        <!-- 1. User ID -->
+        
+
+        <!-- 2. Item Dropdown - sends ITEM NAME (string) -->
+        <label for="item-select">Select Item</label>
+        <select id="item-select" name="item" required>
+            <option value="">Loading items...</option>
+        </select>
+        <input type="submit" value="Delete item">
+    </form>
+    
+        
+    <form action="/delete_location" method="post">
+        <!-- 3. Region Dropdown - sends REGION NAME (string) -->
+        <label for="region-select">Select Region</label>
+        <select id="region-select" name="region" required>
+            <option value="">Loading regions...</option>
+        </select>
+
+      
+
+        <!-- Submit -->
+        <input type="submit" value="Delete Location">
+    </form>
+
+    <div id="message" class="message"></div>
+</div>
+
+<script>
+    // Load Items - value = item name (string)
+    async function loadItems() {
+        try {
+            const res = await fetch('/items');
+            const items = await res.json();
+
+            const select = document.getElementById('item-select');
+            select.innerHTML = '<option value="">Select an item</option>';
+
+            items.forEach(i => {
+                const opt = new Option(i.item, i.item);  // value = name, text = name
+                select.add(opt);
+            });
+        } catch (err) {
+            document.getElementById('item-select').innerHTML = '<option value="">Failed to load</option>';
+        }
+    }
+
+    // Load Regions - value = region name
+    async function loadRegions() {
+        try {
+            const res = await fetch('/locations');
+            const regions = await res.json();
+
+            const select = document.getElementById('region-select');
+            select.innerHTML = '<option value="">Select a region</option>';
+
+            regions.forEach(r => {
+                const opt = new Option(r, r);
+                select.add(opt);
+            });
+        } catch (err) {
+            document.getElementById('region-select').innerHTML = '<option value="">Failed to load</option>';
+        }
+    }
+
+    // Optional: Show message after redirect (if you add flash later)
+    window.addEventListener('load', () => {
+        loadItems();
+        loadRegions();
+    });
+</script>
+
+</body>
+</html>
