@@ -2,37 +2,197 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Locations Map</title>
-    <!-- Leaflet CSS -->
+    <title>Location Management Forms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load Inter Font for a professional look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS (Included for completeness as title suggests map context) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     
     <style>
+        /* Base Styles and Reset */
+        * { box-sizing: border-box; }
         
         body {
-            position: absolute;
-            top: 20px; left: 50%;
-            
-            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            background: #f3f4f6; /* Light gray background (Admin Dashboard Style) */
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
+        /* Main Container for Forms (Card Style) */
+        .main-container {
+            width: 100%;
+            max-width: 500px;
+            margin-top: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Grouping and Headers */
+        h2 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        .form-section {
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        /* Form Controls - Grouping Label and Input */
+        .form-control {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #4b5563; /* Medium gray for labels */
+        }
+
+        /* Input Styling */
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #1f2937;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4f46e5; /* Primary Indigo focus color */
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        /* Submit Button Base Styling */
+        input[type="submit"] {
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 10px; /* Added spacing above buttons */
+        }
+
+        /* Styling for the ADD Button (Primary Action) */
+        .btn-primary {
+            background: #4f46e5; /* Primary Indigo */
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+
+        /* Styling for the DELETE Button (Critical Action) */
+        .btn-danger {
+            background: #dc2626; /* Deep Red */
+            box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);
+        }
+        
+        .btn-danger:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+        }
+
+        /* Separator line for visual clarity between forms */
+        .separator {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 30px 0;
+        }
+        
+        .btn-back {
+            background: #4f46e5; /* Primary Indigo */
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+        
     </style>
 </head>
 <body>
- 
- <form action="/items1" method="post">
-       
-        <input type="text" name="item" placeholder="item" id="item" required>
-        <input type="submit" value="Send">
-        
- </form>
-  <form action="/del_location12" method="post">
-       
-        <input type="text" name="region" placeholder="region" id="region" required>
-        <input type="text" name="latitude" placeholder="region" id="latitude" required>
-        <input type="text" name="longitude" placeholder="region" id="longitude" required>
-        <input type="submit" value="Send">
-        
- </form>
- 
+
+<div class="main-container">
+    
+    <!-- ADD Location Form -->
+    <div class="form-section">
+        <form action="/prev">
+            <button class="btn-back" >
+                &larr; Back to Dashboard
+                </button>
+         </form>
+        <h2>Add Item (Form 1)</h2>
+        <form action="/items1" method="post">
+            <div class="form-control">
+                <label for="item">Item Name</label>
+                <input type="text" name="item" placeholder="e.g., laptop,radio" id="item" required>
+            </div>
+            <input type="submit" value="Add Item" class="btn-primary">
+        </form>
+    </div>
+
+    <div class="separator"></div>
+
+    <!-- DELETE Location Form -->
+    <div class="form-section">
+        <h2>Add Location (Form 2)</h2>
+        <form action="/del_location12" method="post">
+            <div class="form-control">
+                <label for="region">Region Name</label>
+                <input type="text" name="region" placeholder="e.g., Tokyo" id="region" required>
+            </div>
+            
+            <div class="form-control">
+                <label for="latitude">Latitude (Decimal)</label>
+                <input type="text" name="latitude" placeholder="e.g., 35.6895" id="latitude" required>
+            </div>
+            
+            <div class="form-control">
+                <label for="longitude">Longitude (Decimal)</label>
+                <input type="text" name="longitude" placeholder="e.g., 139.6917" id="longitude" required>
+            </div>
+            
+            <input type="submit" value="Add Location" class="btn-danger">
+        </form>
+    </div>
+    
+</div>
 
 </body>
 </html>
-

@@ -79,11 +79,37 @@
         }
         .success { color: #27ae60; }
         .error { color: #e74c3c; }
+
+        
+        .btn-back {
+            background: #4f46e5; /* Primary Indigo */
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <form action="/prev_user">
+            <button class="btn-back" >
+                &larr; Back to Dashboard
+                </button>
+         </form>
     <h2>Submit Item Amount</h2>
 
     <form id="amountForm" action="/amount" method="post">

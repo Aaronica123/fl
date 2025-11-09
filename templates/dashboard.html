@@ -9,9 +9,66 @@
     <style>
         /* Custom font */
         body { font-family: 'Inter', sans-serif; }
+
+        /* --- Custom CSS Decoration for E-Waste Article --- */
+        .e-waste-article {
+            /* Enhanced card style for depth and theme integration */
+            background-color: #ffffff; 
+            border: 1px solid #d1d5db; /* Light gray border */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Stronger shadow */
+            margin-top: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .e-waste-article:hover {
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        .e-waste-article h3 {
+            color: #1d4ed8; /* Darker Blue (Indigo-700 equivalent) for article headings */
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #e0e7ff; /* Subtle divider */
+            padding-bottom: 5px;
+        }
+
+        .e-waste-article p {
+            color: #374151; /* Darker gray for better readability */
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .e-waste-article .danger-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .e-waste-article .danger-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        /* Custom bullet point (Updated to a slightly more modern look) */
+        .e-waste-article .danger-list li::before {
+            content: "✕"; /* Using a simple X for danger */
+            color: #ef4444; /* Tailwind Red-500 */
+            font-size: 1rem;
+            font-weight: 600;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-50 min-h-screen">
     <script>
         // Check authentication status on load
         window.onload = function() {
@@ -49,37 +106,40 @@
         }
     </script>
 
-    <!-- Header Navigation Bar -->
-    <header class="bg-white shadow-md">
+    <!-- Header Navigation Bar (Changed to dark background for contrast) -->
+    <header class="bg-indigo-700 shadow-xl sticky top-0 z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <h1 class="text-xl font-bold text-indigo-600">App Tracker</h1>
+                    <!-- Changed text color to white -->
+                    <h1 class="text-2xl font-extrabold text-white tracking-wider">App Tracker</h1>
                 </div>
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden md:flex space-x-4">
-                    <!-- TAG 1: HOMEPAGE (current page) -->
-                    <a href="/" class="text-gray-900 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium bg-indigo-50">
+                
+                <!-- Desktop Navigation Links (Updated colors and hover effects) -->
+                <nav class="hidden md:flex space-x-2">
+                    <!-- TAG 1: HOMEPAGE (current page - highlighted) -->
+                    <a href="/" class="text-white px-3 py-2 rounded-lg text-sm font-medium bg-indigo-600 transition duration-150 shadow-inner">
                         Homepage
                     </a>
                     <!-- TAG 2: MAPS -->
-                    <a href="/locations_page" class="text-gray-500 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
+                    <a href="/map_page" class="text-indigo-200 hover:text-white hover:bg-indigo-600 px-3 py-2 rounded-lg text-sm font-medium transition duration-150">
                         Maps
                     </a>
                     <!-- TAG 3: INPUT -->
-                    <a href="/item_page" class="text-gray-500 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
+                    <a href="/item_page" class="text-indigo-200 hover:text-white hover:bg-indigo-600 px-3 py-2 rounded-lg text-sm font-medium transition duration-150">
                         Input
                     </a>
                     <!-- TAG 4: STATISTIC -->
-                    <a href="/statistics_page" class="text-gray-500 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
+                    <a href="/statistics_page" class="text-indigo-200 hover:text-white hover:bg-indigo-600 px-3 py-2 rounded-lg text-sm font-medium transition duration-150">
                         Statistic
                     </a>
                 </nav>
-                <!-- TAG 5: LOGOUT Button -->
+                
+                <!-- TAG 5: LOGOUT Button (Enhanced styling) -->
                 <div>
                     <button 
                         onclick="handleLogout()"
-                        class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition duration-150 shadow-md">
+                        class="px-4 py-2 bg-red-500 text-white text-sm font-semibold rounded-xl hover:bg-red-600 transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]">
                         Logout
                     </button>
                 </div>
@@ -89,12 +149,47 @@
 
     <!-- Main Content Area (Homepage Content) -->
     <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div class="bg-white p-8 rounded-xl shadow-lg">
-            <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Welcome to the Homepage</h2>
-            <p class="text-gray-600">
-                This is your application dashboard. Use the navigation bar above to manage locations, input items, view statistics, or log out.
+        <!-- Welcome Card (Enhanced style) -->
+        <div class="bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-indigo-500 mb-8">
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-2">
+                <span class="text-indigo-600">Hello,</span> Welcome Back!
+            </h2>
+            <p class="text-lg text-gray-500">
+                This centralized hub helps you track, manage, and analyze all your application data efficiently.
+            </p>
+            <div class="mt-6 flex flex-wrap gap-4">
+                <span class="text-sm font-medium text-indigo-700 bg-indigo-100 px-3 py-1 rounded-full">Data Integration Status: Operational</span>
+                <span class="text-sm font-medium text-green-700 bg-green-100 px-3 py-1 rounded-full">System Health: Excellent</span>
+            </div>
+        </div>
+
+        <!-- E-Waste Article Section (Uses custom CSS for decoration) -->
+        <div class="e-waste-article">
+            <h2 class="text-3xl font-extrabold text-indigo-700 mb-4 border-b pb-2 border-indigo-100">The Silent Danger of E-Waste</h2>
+            
+            <p>
+                **E-waste**, or electronic waste, refers to discarded electrical or electronic devices. This rapidly growing waste stream includes everything from old smartphones and laptops to refrigerators and light bulbs. While often seen as harmless junk, e-waste poses one of the most significant environmental challenges of our time due to its complex and hazardous composition.
+            </p>
+
+            <h3>Why E-Waste is Dangerous</h3>
+            <p>
+                Modern electronics are constructed from hundreds of materials, many of which are highly toxic when improperly disposed of. When e-waste is dumped in landfills or incinerated, these toxins leach into the ground and air, causing widespread pollution.
+            </p>
+
+            <ul class="danger-list">
+                <li>**Lead:** Found in cathode ray tubes (CRT) and solder, lead is a neurotoxin that can cause irreversible damage to the nervous system and brain, especially in children.</li>
+                <li>**Mercury:** Used in flat-screen monitors and circuit boards, mercury vapor is released when devices are crushed or burned, leading to severe respiratory and neurological damage.</li>
+                <li>**Cadmium:** Present in rechargeable batteries and older screens, cadmium is a known carcinogen that accumulates in the human body, targeting the kidneys.</li>
+                <li>**Brominated Flame Retardants (BFRs):** Used to prevent fires, BFRs are bioaccumulative, disrupting hormonal functions and potentially affecting fetal development.</li>
+            </ul>
+
+            <h3>The Need for Responsible Disposal</h3>
+            <p>
+                The solution lies in a circular economy approach: **Reduce, Reuse, and Recycle.** Recycling e-waste responsibly ensures that valuable materials like gold, copper, and palladium are recovered, reducing the need for destructive mining. More critically, certified recycling processes safely neutralize the hazardous components, protecting both human health and the environment from contamination.
             </p>
         </div>
+        <!-- End E-Waste Article Section -->
+
     </main>
 
 </body>

@@ -15,11 +15,35 @@
         .container {
             max-width: 1000px;
         }
+         .btn-back {
+            background: #4f46e5; /* Primary Indigo */
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body class="p-4 sm:p-8">
 
     <div class="container mx-auto">
+        <form action="/prev_user">
+            <button class="btn-back" >
+                &larr; Back to Dashboard
+                </button>
+         </form>
         <header class="mb-6 border-b-2 border-indigo-100 pb-4">
             <h1 class="text-3xl font-bold text-indigo-700 mb-1">Regional Total Amount Tracker (Aggregated)</h1>
             <p id="last-updated" class="text-sm text-gray-500">

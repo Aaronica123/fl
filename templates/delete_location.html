@@ -2,81 +2,155 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Submit Amount</title>
+    <title>Submit Item Amount</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load Inter Font for a professional dashboard look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
+        /* Base Styles and Reset */
         * { box-sizing: border-box; }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Inter', sans-serif;
+            background: #f3f4f6; /* Light gray dashboard background */
             margin: 0;
             padding: 20px;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to the top of the screen */
         }
+
         .container {
-            max-width: 500px;
-            margin: 40px auto;
+            width: 100%;
+            max-width: 450px;
+            margin-top: 40px;
             background: white;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             text-align: center;
-            color: #2c3e50;
+            color: #1f2937;
             margin-bottom: 25px;
             font-size: 1.8rem;
+            font-weight: 800;
         }
+
+        /* Form Styling */
+        form {
+            padding: 20px 0;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+        form:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
         label {
             display: block;
             margin: 15px 0 5px;
             font-weight: 600;
-            color: #34495e;
+            color: #4b5563; /* Medium gray for labels */
+            font-size: 0.9rem;
         }
-        input, select {
+        
+        input, select { /* Targeting both input and select elements */
             width: 100%;
             padding: 12px;
-            border: 1px solid #ddd;
+            border: 1px solid #d1d5db;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border 0.3s;
+            color: #1f2937;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            appearance: none; /* Remove default select styling */
+            background-color: #fff;
         }
+
         input:focus, select:focus {
             outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            border-color: #4f46e5; /* Primary Indigo focus color */
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
         }
-        input[type="submit"] {
-            background: #2ecc71;
+
+        /* Back Button Styling (Secondary Action - Indigo) */
+        .btn-back {
+            background: #4f46e5; /* Primary Indigo */
             color: white;
-            font-weight: bold;
-            margin-top: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+        
+        /* Submit Button Styling (Critical Action - Red for Deletes) */
+        input[type="submit"] {
+            background: #dc2626; /* Deep Red for delete actions */
+            color: white;
+            font-weight: 600;
             cursor: pointer;
             border: none;
             padding: 14px;
             font-size: 1.1rem;
             border-radius: 8px;
-            transition: background 0.3s;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);
         }
+
         input[type="submit"]:hover {
-            background: #27ae60;
+            background: #b91c1c;
+            transform: translateY(-1px);
         }
-        .loading {
-            color: #95a5a6;
-            font-style: italic;
-        }
+
+        /* Message Box Styling */
         .message {
             margin-top: 15px;
-            font-weight: bold;
+            padding: 10px;
+            font-weight: 600;
             text-align: center;
+            border-radius: 6px;
         }
-        .success { color: #27ae60; }
-        .error { color: #e74c3c; }
+        .loading { 
+            color: #95a5a6; 
+            font-style: italic;
+        }
+        .success { 
+            color: #15803d; /* Green text */
+            background-color: #dcfce7; /* Light green background */
+        }
+        .error { 
+            color: #b91c1c; /* Red text */
+            background-color: #fee2e2; /* Light red background */
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- BACK BUTTON IMPLEMENTATION -->
+   <form action="/prev">
+    <button class="btn-back" >
+        &larr; Back to Dashboard
+    </button>
+   </form>
+    
     <h2>Submit Item Amount</h2>
 
     <form action="/delete_item" method="post">
@@ -99,7 +173,7 @@
             <option value="">Loading regions...</option>
         </select>
 
-      
+        
 
         <!-- Submit -->
         <input type="submit" value="Delete Location">

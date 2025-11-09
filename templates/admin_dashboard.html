@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Dashboard</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font */
+        body { 
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- Custom CSS Decoration for E-Waste Article --- */
+        .e-waste-article {
+            /* Enhanced card style for depth and theme integration */
+            background-color: #ffffff; 
+            border: 1px solid #d1d5db; /* Light gray border */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Stronger shadow */
+            margin-top: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .e-waste-article:hover {
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        .e-waste-article h3 {
+            color: #1d4ed8; /* Darker Blue (Indigo-700 equivalent) for article headings */
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #e0e7ff; /* Subtle divider */
+            padding-bottom: 5px;
+        }
+
+        .e-waste-article p {
+            color: #374151; /* Darker gray for better readability */
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .e-waste-article .danger-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .e-waste-article .danger-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        /* Custom bullet point (Updated to a simple X for danger) */
+        .e-waste-article .danger-list li::before {
+            content: "✕"; 
+            color: #ef4444; /* Tailwind Red-500 */
+            font-size: 1rem;
+            font-weight: 600;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        /* End E-Waste Article CSS */
+
+        /* Enhanced Widget Hover Effect */
+        .dashboard-widget:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <script>
+        // NOTE: Authentication check logic has been removed as per the latest HTML provided, 
+        // but the logout function remains active.
+
+        /**
+         * Handles the client and server-side logout process.
+         */
+        async function handleLogout() {
+            // 1. Clear server-side session (Flask session)
+            try {
+                // Assuming a '/logout' route exists in app.py to clear the session
+                const response = await fetch('/logout', { method: 'POST' });
+                
+                if (response.ok) {
+                    console.log('Server session cleared successfully.');
+                } else {
+                    console.error('Server logout failed (Status:', response.status, '), proceeding with redirect.');
+                }
+            } catch (error) {
+                // Handle network errors (e.g., if Flask server is down)
+                console.error('Network error during server logout:', error);
+            }
+
+            // 2. Clear client-side sessionStorage (Good practice for single page apps)
+            sessionStorage.clear(); 
+
+            // 3. Redirect back to the main route (which renders code.html)
+            window.location.href = '/';
+        }
+    </script>
+
+    <!-- Header Navigation Bar (Beautified with dark background and contrasting text) -->
+    <header class="bg-indigo-700 shadow-2xl sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <!-- Changed text color to white for contrast -->
+                    <h1 class="text-2xl font-extrabold text-white tracking-wide">App Tracker Admin</h1>
+                </div>
+                
+                <!-- Desktop Navigation Links (Updated for dark header) -->
+                <nav class="hidden md:flex space-x-2 lg:space-x-4">
+                    <!-- Dashboard (Current page indicator updated) -->
+                    <a href="/home" class="text-indigo-900 px-3 py-2 rounded-lg text-sm font-semibold transition duration-150 bg-indigo-100 shadow-inner">
+                        <span class="inline-block align-middle">
+                            <!-- Home Icon (SVG) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        </span>
+                        Dashboard
+                    </a>
+                    
+                    <!-- New Link: Insert Users -->
+                    <a href="/data_page" class="text-indigo-200 hover:bg-indigo-600 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition duration-150">
+                        Insert Data
+                    </a>
+
+                    <!-- Maps/Locations Page -->
+                    <a href="/locations_page" class="text-indigo-200 hover:bg-indigo-600 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition duration-150">
+                        Locations
+                    </a>
+                    
+                    <!-- Delete Records Page -->
+                    <a href="/delete_location" class="text-indigo-200 hover:bg-indigo-600 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition duration-150">
+                        Delete Records
+                    </a>
+                    
+                    <!-- Renamed Link: Manage Users -->
+                    <a href="/delete_user" class="text-indigo-200 hover:bg-indigo-600 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition duration-150">
+                        Manage Users
+                    </a>
+                </nav>
+                
+                <!-- Logout Button -->
+                <div>
+                    <button 
+                        onclick="handleLogout()"
+                        class="px-4 py-2 bg-red-500 text-white text-sm font-semibold rounded-xl hover:bg-red-600 transition duration-300 shadow-lg transform hover:scale-[1.05]">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area (Dashboard Summary) -->
+    <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <!-- Main Welcome Card (Enhanced with subtle gradient/border) -->
+        <div class="bg-white p-10 rounded-2xl shadow-2xl border-t-8 border-indigo-500/80 transform transition duration-500 hover:shadow-3xl">
+            <h2 class="text-5xl font-extrabold text-gray-900 mb-2 tracking-tight">
+                <span class="text-indigo-600">Admin</span> Control Panel
+            </h2>
+            <p class="text-xl text-gray-500 mt-4">
+                You have successfully logged in. This interface allows you to manage all aspects of the App Tracker system.
+            </p>
+        </div>
+
+        <!-- Dashboard Widgets (Mock Data - Enhanced style) -->
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Widget 1: Total Locations -->
+            <div class="dashboard-widget bg-white p-6 rounded-xl shadow-lg border-l-8 border-blue-500 transition duration-300 transform">
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Locations</p>
+                <p class="mt-1 text-4xl font-extrabold text-gray-900">45</p>
+                <a href="/locations_page" class="text-sm text-blue-600 hover:text-blue-800 font-semibold mt-3 block">View all locations &rarr;</a>
+            </div>
+
+            <!-- Widget 2: Items Logged Today -->
+            <div class="dashboard-widget bg-white p-6 rounded-xl shadow-lg border-l-8 border-green-500 transition duration-300 transform">
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Items Logged Today</p>
+                <p class="mt-1 text-4xl font-extrabold text-gray-900">12</p>
+                <a href="/data_page" class="text-sm text-green-600 hover:text-green-800 font-semibold mt-3 block">Add new item &rarr;</a>
+            </div>
+
+            <!-- Widget 3: Registered Users -->
+            <div class="dashboard-widget bg-white p-6 rounded-xl shadow-lg border-l-8 border-yellow-500 transition duration-300 transform">
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Registered Users</p>
+                <p class="mt-1 text-4xl font-extrabold text-gray-900">8</p>
+                <a href="/delete_user" class="text-sm text-yellow-600 hover:text-yellow-800 font-semibold mt-3 block">Manage accounts &rarr;</a>
+            </div>
+
+            <!-- Widget 4: Pending Deletions -->
+            <div class="dashboard-widget bg-white p-6 rounded-xl shadow-lg border-l-8 border-red-500 transition duration-300 transform">
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Pending Deletions</p>
+                <p class="mt-1 text-4xl font-extrabold text-gray-900">0</p>
+                <a href="/delete_location" class="text-sm text-red-600 hover:text-red-800 font-semibold mt-3 block">Review deletion log &rarr;</a>
+            </div>
+        </div>
+        
+        <!-- E-Waste Article Section (Integrated Content & Styles) -->
+        <div class="e-waste-article mt-10">
+            <h2 class="text-3xl font-extrabold text-indigo-700 mb-4 border-b pb-2 border-indigo-100">The Silent Danger of E-Waste</h2>
+            
+            <p>
+                **E-waste**, or electronic waste, refers to discarded electrical or electronic devices. This rapidly growing waste stream includes everything from old smartphones and laptops to refrigerators and light bulbs. While often seen as harmless junk, e-waste poses one of the most significant environmental challenges of our time due to its complex and hazardous composition.
+            </p>
+
+            <h3>Why E-Waste is Dangerous</h3>
+            <p>
+                Modern electronics are constructed from hundreds of materials, many of which are highly toxic when improperly disposed of. When e-waste is dumped in landfills or incinerated, these toxins leach into the ground and air, causing widespread pollution.
+            </p>
+
+            <ul class="danger-list">
+                <li>**Lead:** Found in cathode ray tubes (CRT) and solder, lead is a neurotoxin that can cause irreversible damage to the nervous system and brain, especially in children.</li>
+                <li>**Mercury:** Used in flat-screen monitors and circuit boards, mercury vapor is released when devices are crushed or burned, leading to severe respiratory and neurological damage.</li>
+                <li>**Cadmium:** Present in rechargeable batteries and older screens, cadmium is a known carcinogen that accumulates in the human body, targeting the kidneys.</li>
+                <li>**Brominated Flame Retardants (BFRs):** Used to prevent fires, BFRs are bioaccumulative, disrupting hormonal functions and potentially affecting fetal development.</li>
+            </ul>
+
+            <h3>The Need for Responsible Disposal</h3>
+            <p>
+                The solution lies in a circular economy approach: **Reduce, Reuse, and Recycle.** Recycling e-waste responsibly ensures that valuable materials like gold, copper, and palladium are recovered, reducing the need for destructive mining. More critically, certified recycling processes safely neutralize the hazardous components, protecting both human health and the environment from contamination.
+            </p>
+        </div>
+        <!-- End E-Waste Article Section -->
+
+    </main>
+
+</body>
+</html>

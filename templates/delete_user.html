@@ -2,120 +2,251 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Submit Amount</title>
+    <title>Delete User</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load Inter Font for a professional dashboard look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
+        /* Base Styles and Reset */
         * { box-sizing: border-box; }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Inter', sans-serif;
+            background: #f3f4f6; /* Light gray dashboard background */
             margin: 0;
             padding: 20px;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
+
         .container {
-            max-width: 500px;
-            margin: 40px auto;
+            width: 100%;
+            max-width: 450px;
+            margin-top: 40px;
             background: white;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             text-align: center;
-            color: #2c3e50;
+            color: #1f2937;
             margin-bottom: 25px;
             font-size: 1.8rem;
+            font-weight: 800;
         }
+
+        /* Form Styling */
+        form {
+            padding: 20px 0;
+        }
+
         label {
             display: block;
             margin: 15px 0 5px;
             font-weight: 600;
-            color: #34495e;
+            color: #4b5563; /* Medium gray for labels */
+            font-size: 0.9rem;
         }
-        input, select {
+        
+        input[type="text"], select {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ddd;
+            border: 1px solid #d1d5db;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border 0.3s;
+            color: #1f2937;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            appearance: none; /* Remove default select styling */
+            background-color: #fff;
         }
+
         input:focus, select:focus {
             outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            border-color: #4f46e5; /* Primary Indigo focus color */
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
         }
-        input[type="submit"] {
-            background: #2ecc71;
+
+        /* Submit Button Styling (Critical Action - Red) */
+        .btn-critical {
+            background: #dc2626; /* Deep Red */
             color: white;
-            font-weight: bold;
-            margin-top: 20px;
+            font-weight: 600;
             cursor: pointer;
             border: none;
             padding: 14px;
             font-size: 1.1rem;
             border-radius: 8px;
-            transition: background 0.3s;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);
         }
-        input[type="submit"]:hover {
-            background: #27ae60;
+
+        .btn-critical:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
         }
-        .loading {
-            color: #95a5a6;
-            font-style: italic;
-        }
+
+        /* Message Box Styling */
         .message {
             margin-top: 15px;
-            font-weight: bold;
+            padding: 10px;
+            font-weight: 600;
             text-align: center;
+            border-radius: 6px;
         }
-        .success { color: #27ae60; }
-        .error { color: #e74c3c; }
+        .loading { 
+            color: #95a5a6; 
+            font-style: italic;
+        }
+        .success { 
+            color: #15803d; 
+            background-color: #dcfce7; 
+        }
+        .error { 
+            color: #b91c1c; 
+            background-color: #fee2e2; 
+        }
+        .btn-back {
+            background: #4f46e5; /* Primary Indigo */
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <form action="/prev">
+        <button class="btn-back" >
+            &larr; Back to Dashboard
+        </button>
+     </form>
     <h2>Delete User</h2>
 
     <form action="/delete_user" method="POST" >
-        <!-- 3. Region Dropdown - sends REGION NAME (string) -->
-        <label for="region-select">Select Region</label>
-        <select id="region-select" name="region" required>
-            <option value="">Loading regions...</option>
+        <!-- 1. Email Dropdown -->
+        <label for="email-select">Select User Email</label>
+        <select id="email-select" name="email" required>
+            <option value="" class="loading">Loading emails...</option>
         </select>
 
-        <input type="submit" value="Delete Email">
+        <input type="submit" value="Delete User" class="btn-critical">
     </form>
 
     <div id="message" class="message"></div>
 </div>
 
 <script>
-    // Load Items - value = item name (string)
-    
-    // Load Regions - value = region name
+    // Placeholder functions for audio processing (kept for self-contained structure)
+    function base64ToArrayBuffer(base64) {
+        const binaryString = atob(base64);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        return bytes.buffer;
+    }
+
+    function pcmToWav(pcm16, sampleRate = 16000) {
+        const buffer = new ArrayBuffer(44 + pcm16.length * 2);
+        const view = new DataView(buffer);
+        let offset = 0;
+
+        function writeString(str) {
+            for (let i = 0; i < str.length; i++) {
+                view.setUint8(offset++, str.charCodeAt(i));
+            }
+        }
+
+        function writeUint32(val) { view.setUint32(offset, val, true); offset += 4; }
+        function writeUint16(val) { view.setUint16(offset, val, true); offset += 2; }
+
+        // RIFF chunk descriptor
+        writeString('RIFF');
+        writeUint32(36 + pcm16.length * 2);
+        writeString('WAVE');
+
+        // fmt sub-chunk
+        writeString('fmt ');
+        writeUint32(16); // Sub-chunk size: 16
+        writeUint16(1);  // Audio format (1=PCM)
+        writeUint16(1);  // Number of channels (1=Mono)
+        writeUint32(sampleRate); // Sample rate
+        writeUint32(sampleRate * 2); // Byte rate (SampleRate * NumChannels * BitsPerSample/8)
+        writeUint16(2);  // Block align (NumChannels * BitsPerSample/8)
+        writeUint16(16); // Bits per sample
+
+        // data sub-chunk
+        writeString('data');
+        writeUint32(pcm16.length * 2);
+
+        // Write PCM data
+        const dataView = new DataView(buffer);
+        for (let i = 0; i < pcm16.length; i++) {
+            dataView.setInt16(offset, pcm16[i], true);
+            offset += 2;
+        }
+
+        return new Blob([dataView], { type: 'audio/wav' });
+    }
+
+    // Load Emails - value = email address (string)
     async function load_email() {
+        // Renaming select ID from 'region-select' to 'email-select' for semantic accuracy
+        const select = document.getElementById('email-select');
+        select.innerHTML = '<option value="" class="loading">Loading emails...</option>';
+        
+        // --- Dummy Data/Mock Fetch Start ---
+        // Replace with actual fetch to your backend: const res = await fetch('/get_email');
+        const mockEmails = [
+            "admin@example.com", 
+            "user1@test.com", 
+            "analyst_joe@corp.net"
+        ];
+        // --- Dummy Data/Mock Fetch End ---
+
         try {
-            const res = await fetch('/get_email');
-            const regions = await res.json();
+            // Uncomment the real fetch when connecting to a server:
+            // const res = await fetch('/get_email');
+            // const emails = await res.json();
+            const emails = mockEmails; // Using mock data for demonstration
 
-            const select = document.getElementById('region-select');
-            select.innerHTML = '<option value="">Select an email</option>';
-
-            regions.forEach(r => {
+            select.innerHTML = '<option value="">Select a user email</option>';
+            
+            emails.forEach(r => {
+                // The name attribute in the select is 'email' (was 'region')
                 const opt = new Option(r, r);
                 select.add(opt);
             });
         } catch (err) {
-            document.getElementById('region-select').innerHTML = '<option value="">Failed to load</option>';
+            console.error("Failed to load emails:", err);
+            select.innerHTML = '<option value="">Failed to load emails</option>';
         }
     }
 
     // Optional: Show message after redirect (if you add flash later)
     window.addEventListener('load', () => {
-        
         load_email();
     });
 </script>
