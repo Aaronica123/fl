@@ -26,7 +26,7 @@ def register_code_model(model):
 # --- Routes ---
 
 # 1. Route to serve the items1.html file (The Dashboard)
-@codes_bp.route('/home')
+@codes_bp.route('/prev_user')
 def items1_html_route():
     """
     Renders and serves the items1.html template.

@@ -170,7 +170,7 @@ def prev_use():
 @app.route('/admin')
 def admin():
     return render_template('code.html')
-        
+
 # *** REMOVE THIS BLOCK ENTIRELY ***
 # with app.app_context():
 #     db.create_all()
