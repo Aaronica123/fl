@@ -7,13 +7,13 @@
 ---
 
 ## Overview  
-**EcoTrack** is a mobile-first platform that makes responsible e-waste recycling simple, transparent, and rewarding. Users scan old devices, discover certified recycling facilities, learn exactly what materials are recovered, and track their personal environmental impact.  
+**EcoTrack** is a mobile-first platform that makes responsible e-waste recycling simple, transparent, and rewarding. Users scan old devices, discover certified recycling facilities♻, learn exactly what materials are recovered, and track their personal environmental impact✅.  
 
 Behind the scenes, a secure **admin panel** lets authorized personnel manage locations, recyclable items, and user data while maintaining strict referential integrity.
 
 ---
 
-## User Features (7-Step Cycle)  
+## User Features (7-Step Cycle) 🔁 
 1. **Register** – Email or one-tap Google/Apple sign-in  
 2. **Login** – Biometric or saved session  
 3. **Dashboard** – Real-time stats (kg recycled, CO₂ saved, badges)  
@@ -111,6 +111,9 @@ Q3 2025 – 1 million active users
 
 
 Contact & Links
+
+Welcome to EcoTrack😉 https://fl-3-pskv.onrender.com
+
 
 Website: https://fl-3-pskv.onrender.com
 Email: k.aaronmutua@gmail.com
