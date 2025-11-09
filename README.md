@@ -1,7 +1,7 @@
 # EcoTrack – Electronic Waste Recycling App  
 **Turning e-waste into impact, one scan at a time.**
 
-[![EcoTrack Logo](https://via.placeholder.com/800x200?text=EcoTrack+Logo)](https://ecotrack.app)  
+[![EcoTrack Logo](https://via.placeholder.com/800x200?text=EcoTrack+Logo)]([https://ecotrack.app](https://fl-3-pskv.onrender.com))  
 *Live demo (coming soon) • App Store • Google Play*
 
 ---
