@@ -35,7 +35,7 @@ def items1_html_route():
     """
     # Check for session protection (optional, but good practice)
     if 'user_id' not in session:
-        return redirect(url_for('index')) # Redirect to code entry page
+        return redirect(url_for('dashboard_home')) # Redirect to code entry page
         
     return render_template('admin_dashboard.html')
 
